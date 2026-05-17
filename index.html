@@ -14,6 +14,7 @@
   <body class="pre-consent">
     <header class="topbar">
       <div class="brand">
+        <button class="btn btn-ic" id="homeBtn" title="홈으로 돌아가기">◂</button>
         <div class="logo">P</div>
         <div>
           <div class="name">Polaris Navigator</div>
@@ -144,6 +145,36 @@
       <span class="item">⟦ <b>treemap_data.json</b> · schema v1.0 ⟧</span>
     </footer>
 
+    <!-- Home Hub -->
+    <div class="home-hub" id="home-hub">
+      <header class="hub-header">
+        <div class="hub-logo">P</div>
+        <h1 class="hub-title">흔들리지 않을 근거</h1>
+        <p class="hub-sub">막연함을 좌표로</p>
+      </header>
+      <div class="hub-cards">
+        <a class="nav-card" data-route="treemap" href="#">
+          <div class="card-icon">🗺️</div>
+          <h2>Navigator 마을 방문하기</h2>
+          <p>이 기업, 어떻게 돈을 버나요.<br>종목을 클릭하면 사업 본질이 보입니다.</p>
+          <span class="card-arrow">→</span>
+        </a>
+        <a class="nav-card" data-route="watchlist" href="#">
+          <div class="card-icon">⭐</div>
+          <h2>관심종목</h2>
+          <p>내가 주시하는 기업을 한곳에 모읍니다.</p>
+          <span class="card-arrow">→</span>
+        </a>
+        <a class="nav-card" data-route="guru" href="#">
+          <div class="card-icon">🧠</div>
+          <h2>내 포지션은 어디쯤?</h2>
+          <p>공개 보유 종목을 기준으로, 내 선택이 주요 투자자들과 어떻게 다른지 확인합니다.</p>
+          <span class="card-arrow">→</span>
+        </a>
+      </div>
+      <footer class="hub-footer">Polaris Navigator v0.1 · Capstone 2026</footer>
+    </div>
+
     <div class="modal-mask show" id="modal">
       <div class="modal">
         <div class="badge">▲ DISCLAIMER · US-19</div>
@@ -168,6 +199,21 @@
         <div class="meta-fine">
           자본시장법 / AI 기본법(2026.01 시행) 준수 · UserConsent NDJSON append-only · localStorage key: <code>consent_given</code>
         </div>
+      </div>
+    </div>
+
+    <!-- Splash: Loading + Guru Quote -->
+    <div class="splash" id="splash">
+      <div class="splash-loading" id="splash-loading">
+        <div class="splash-logo">P</div>
+        <div class="splash-title">POLARIS NAVIGATOR</div>
+        <div class="splash-bar-track"><div class="splash-bar-fill"></div></div>
+        <div class="splash-sub">Initializing 3D Market Treemap…</div>
+      </div>
+      <div class="splash-quote" id="splash-quote">
+        <div class="quote-deco">✦</div>
+        <blockquote class="quote-text" id="quote-text"></blockquote>
+        <div class="quote-author" id="quote-author"></div>
       </div>
     </div>
 

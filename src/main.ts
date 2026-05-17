@@ -4,6 +4,59 @@ import { loadTreemapData } from './data/loadTreemapData';
 import type { MarketCode, SectorDef, StockRow } from './types';
 import { TreemapScene } from './scene/TreemapScene';
 
+const GURU_QUOTES: { text: string; author: string }[] = [
+  { text: '누군가 그늘에 앉아 쉬고 있다면, 그것은 오래전에 누군가가 나무를 심었기 때문이다.', author: 'Warren Buffett' },
+  { text: '꽃이 피는 과정을 보려고 씨앗을 파헤치지 마라. 인내심을 갖고 기다려라.', author: 'Warren Buffett' },
+  { text: '다른 사람이 탐욕스러울 때 두려워하고, 다른 사람이 두려워할 때 탐욕스러워라.', author: 'Warren Buffett' },
+  { text: '가격은 당신이 지불하는 것이고, 가치는 당신이 얻는 것이다.', author: 'Warren Buffett' },
+  { text: '큰 돈은 사는 것도, 파는 것도 아닌 — 기다리는 데서 번다.', author: 'Charlie Munger' },
+  { text: '복리는 세계 8번째 불가사의이다. 이해하는 자는 벌고, 이해하지 못하는 자는 지불한다.', author: 'Albert Einstein' },
+  { text: '시장은 인내심 없는 자의 돈을 인내심 있는 자에게 옮기는 장치이다.', author: 'Warren Buffett' },
+  { text: '주식 시장은 적극적인 자에게서 인내하는 자에게로 돈을 이전하는 도구다.', author: 'Benjamin Graham' },
+  { text: '자신이 이해하지 못하는 사업에는 절대 투자하지 마라.', author: 'Warren Buffett' },
+  { text: '위험은 자신이 무엇을 하는지 모르는 데서 온다.', author: 'Warren Buffett' },
+  { text: '10년간 보유할 주식이 아니라면, 10분도 보유하지 마라.', author: 'Warren Buffett' },
+  { text: '좋은 기업을 적정한 가격에 사는 것이 적정한 기업을 좋은 가격에 사는 것보다 훨씬 낫다.', author: 'Warren Buffett' },
+];
+
+function pickRandomQuote() {
+  return GURU_QUOTES[Math.floor(Math.random() * GURU_QUOTES.length)];
+}
+
+function runSplashSequence(): Promise<void> {
+  return new Promise((resolve) => {
+    const splash = document.getElementById('splash')!;
+    const loading = document.getElementById('splash-loading')!;
+    const quoteWrap = document.getElementById('splash-quote')!;
+    const quoteText = document.getElementById('quote-text')!;
+    const quoteAuthor = document.getElementById('quote-author')!;
+
+    const q = pickRandomQuote();
+    quoteText.textContent = q.text;
+    quoteAuthor.textContent = q.author;
+
+    setTimeout(() => {
+      loading.classList.add('fade-out');
+
+      setTimeout(() => {
+        quoteWrap.classList.add('show');
+
+        setTimeout(() => {
+          quoteWrap.classList.add('fade-out');
+
+          setTimeout(() => {
+            splash.classList.add('fade-out');
+            setTimeout(() => {
+              splash.style.display = 'none';
+              resolve();
+            }, 800);
+          }, 1200);
+        }, 3500);
+      }, 600);
+    }, 3000);
+  });
+}
+
 function fmtBn(cap: number): string {
   if (cap >= 1000) return `${(cap / 1000).toFixed(2)}T`;
   return `${cap.toFixed(1)}B`;
@@ -32,6 +85,8 @@ function aiSummary(stocks: StockRow[], sectors: SectorDef[], st: StockRow): stri
 }
 
 async function main() {
+  await runSplashSequence();
+
   const { sectors, stocks, generatedAt } = await loadTreemapData();
   const secById = Object.fromEntries(sectors.map((s) => [s.id, s])) as Record<string, SectorDef>;
 
@@ -364,6 +419,30 @@ async function main() {
 
   document.getElementById('m-cancel')!.addEventListener('click', () => {
     inlineWarn.classList.add('show');
+  });
+
+  const homeHub = document.getElementById('home-hub')!;
+
+  function showHome() {
+    homeHub.classList.remove('hidden');
+  }
+  function hideHome() {
+    homeHub.classList.add('hidden');
+  }
+
+  document.querySelectorAll<HTMLAnchorElement>('.nav-card').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      const route = card.dataset.route;
+      if (route === 'treemap') {
+        hideHome();
+      }
+    });
+  });
+
+  document.getElementById('homeBtn')!.addEventListener('click', () => {
+    showHome();
+    closePanel();
   });
 
   function tick() {
