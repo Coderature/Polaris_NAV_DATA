@@ -920,6 +920,213 @@ body.pre-consent #scene-wrap {
   font-weight: 600;
 }
 
+/* ── Position View (Card 3) ── */
+#position-view {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 170;
+  background: #08090d;
+  flex-direction: column;
+}
+
+#position-view.active {
+  display: flex;
+}
+
+.pv-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 56px;
+  padding: 0 20px;
+  background: rgba(15, 17, 23, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  flex: none;
+}
+
+.pv-back {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 6px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  color: var(--ink-1);
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  transition: all 0.15s;
+}
+
+.pv-back:hover {
+  background: var(--bg-3);
+  color: var(--ink-0);
+  border-color: var(--line-2);
+}
+
+.pv-title {
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-0);
+}
+
+.pv-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 32px;
+  overflow-y: auto;
+}
+
+.pv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pv-section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-2);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.pv-placeholder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 24px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(30, 32, 44, 0.6), rgba(20, 22, 32, 0.8));
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.pv-placeholder-icon {
+  font-size: 28px;
+}
+
+.pv-placeholder-card p {
+  margin: 0;
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+.pv-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg-3);
+  border: 1px solid var(--line);
+  color: var(--ink-3);
+}
+
+.pv-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.pv-tab {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 6px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transition: none;
+}
+
+.pv-tab.active {
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+  opacity: 0.8;
+}
+
+.pv-disclaimer-bar {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-3);
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  line-height: 1.5;
+}
+
+.upload-coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 24px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(30, 32, 44, 0.6), rgba(20, 22, 32, 0.8));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
+.upload-coming-soon .upload-icon {
+  font-size: 28px;
+}
+
+.upload-coming-soon h3 {
+  margin: 0;
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #e5e5e5;
+}
+
+.upload-coming-soon .upload-desc {
+  margin: 0;
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+.upload-coming-soon .upload-disclaimer {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #f87171;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.upload-coming-soon .upload-btn {
+  height: 36px;
+  padding: 0 20px;
+  border-radius: 8px;
+  background: var(--bg-3);
+  border: 1px solid var(--line);
+  color: var(--ink-3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .pv-body {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+}
+
 /* ── Home Hub ── */
 .home-hub {
   position: fixed;

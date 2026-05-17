@@ -422,8 +422,10 @@ async function main() {
   });
 
   const homeHub = document.getElementById('home-hub')!;
+  const positionView = document.getElementById('position-view')!;
 
   function showHome() {
+    positionView.classList.remove('active');
     homeHub.classList.remove('hidden');
   }
   function hideHome() {
@@ -436,9 +438,14 @@ async function main() {
       const route = card.dataset.route;
       if (route === 'treemap') {
         hideHome();
+      } else if (route === 'guru') {
+        hideHome();
+        positionView.classList.add('active');
       }
     });
   });
+
+  document.getElementById('position-back')!.addEventListener('click', showHome);
 
   document.getElementById('homeBtn')!.addEventListener('click', () => {
     showHome();
