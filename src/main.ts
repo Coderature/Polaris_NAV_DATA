@@ -158,7 +158,15 @@ async function main() {
   let aiTimer: ReturnType<typeof setTimeout> | null = null;
   let currentStock: StockRow | null = null;
 
-  const appDataSource = stocks[0]?.source ?? 'mock';
+  const appDataSource = stocks.every((s) => s.source === 'live')
+    ? 'live'
+    : stocks.some((s) => s.source === 'live')
+      ? 'cached'
+      : 'mock';
+
+  const finnhubNotice = 'Finnhub 무료 티어. 실패 시 데모 스냅샷으로 폴백.';
+  const finnhubPillText = document.getElementById('finnhub-pill-text');
+  if (finnhubPillText) finnhubPillText.textContent = finnhubNotice;
 
   function buildingFromIntersect(obj: THREE.Object3D | null): THREE.Group | null {
     let o: THREE.Object3D | null = obj;
@@ -262,7 +270,7 @@ async function main() {
 
     const pSource = document.getElementById('p-source');
     const pAsof = document.getElementById('p-asof');
-    if (pSource) pSource.textContent = dataSourceDetailLabel(st.source);
+    if (pSource) pSource.textContent = st.sourceLabel ?? dataSourceDetailLabel(st.source);
     if (pAsof) pAsof.textContent = formatSyncTime(st.asOf ?? generatedAt);
 
     if (highlighted && highlighted !== mesh) resetBuildingInteractionScale(highlighted);
@@ -471,6 +479,8 @@ async function main() {
     const dn = stocks.filter((s) => !s.halted && (s.chg ?? 0) < 0).length;
     const ht = stocks.filter((s) => s.halted).length;
     document.getElementById('s-stocks')!.textContent = String(stocks.length);
+    const secCount = document.getElementById('s-sectors');
+    if (secCount) secCount.textContent = String(sectors.length);
     document.getElementById('s-up')!.textContent = String(up);
     document.getElementById('s-down')!.textContent = String(dn);
     document.getElementById('s-halt')!.textContent = String(ht);

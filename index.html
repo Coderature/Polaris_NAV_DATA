@@ -33,7 +33,7 @@
         <div class="search-wrap">
           <input id="search" placeholder="티커 또는 기업명 검색" autocomplete="off" />
         </div>
-        <span class="pill pill-muted"><span class="dot"></span> 데모 데이터</span>
+        <span class="pill pill-muted"><span class="dot"></span> <span id="finnhub-pill-text">Finnhub 무료 티어. 실패 시 데모 스냅샷으로 폴백.</span></span>
         <button class="btn" id="simBtn" title="데모 화면에서 등락·시세를 다시 계산합니다">데모 갱신</button>
         <button class="btn btn-ic" id="resetCam" title="Reset camera">⌂</button>
       </div>
@@ -143,7 +143,7 @@
 
     <footer class="statusbar">
       <span class="item">⬢ <b id="s-stocks">—</b>개 종목</span>
-      <span class="item">◐ <b id="s-sectors">11</b>개 구역</span>
+      <span class="item">◐ <b id="s-sectors">3</b>개 구역</span>
       <span class="item">상승 <b id="s-up">—</b> · <span style="color: var(--change-up)">●</span></span>
       <span class="item">하락 <b id="s-down">—</b> · <span style="color: var(--change-down)">●</span></span>
       <span class="item">정지 <b id="s-halt">0</b></span>

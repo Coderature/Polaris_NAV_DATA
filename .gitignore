@@ -2,6 +2,7 @@ node_modules
 dist
 .DS_Store
 *.local
+.env
 public/models/_kenney_extract/
 public/models/_kenney_ind_extract/
 public/models/_kenney_city-kit-commercial.zip
