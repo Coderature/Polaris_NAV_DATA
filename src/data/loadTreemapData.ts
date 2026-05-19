@@ -62,21 +62,47 @@ function mergeFinnhubQuotes(stocks: StockRow[], quotes: Awaited<ReturnType<typeo
   }
 }
 
+interface PolarisNavDataFile extends TreemapDataFile {
+  generatedAt?: string;
+  documents?: unknown[];
+  extractedRisks?: unknown[];
+}
+
+async function fetchJson<T>(url: string): Promise<T> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`시장 데이터를 불러오지 못했습니다 (${url} ${res.status})`);
+  return (await res.json()) as T;
+}
+
+async function loadPipelineData(): Promise<PolarisNavDataFile | null> {
+  try {
+    return await fetchJson<PolarisNavDataFile>('/polaris_nav_data.json');
+  } catch {
+    return null;
+  }
+}
+
+async function loadTreemapFile(): Promise<TreemapDataFile> {
+  return await fetchJson<TreemapDataFile>('/treemap_data.json');
+}
+
 export async function loadTreemapData(): Promise<{
   sectors: SectorDef[];
   stocks: StockRow[];
   generatedAt: string;
 }> {
-  const res = await fetch('/treemap_data.json');
-  if (!res.ok) throw new Error(`시장 데이터를 불러오지 못했습니다 (${res.status})`);
-  const data = (await res.json()) as TreemapDataFile;
+  const pipelineData = await loadPipelineData();
+  const data = pipelineData && pipelineData.sectors && pipelineData.stocks
+    ? (pipelineData as TreemapDataFile)
+    : await loadTreemapFile();
+
   const stocks: StockRow[] = data.stocks.map((row) => ({ ...row }));
   applyMarketSnapshot(stocks);
 
   const quotes = await fetchAll();
   mergeFinnhubQuotes(stocks, quotes);
 
-  const snap = data.generated_at;
+  const snap = 'generated_at' in data ? data.generated_at : pipelineData?.generatedAt ?? new Date().toISOString();
   for (const st of stocks) {
     if (st.source == null) st.source = 'mock';
     if (st.sourceLabel == null) st.sourceLabel = '데모 스냅샷 기준';
