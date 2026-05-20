@@ -1,104 +1,27 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-05-19T00:00:00.000Z",
+  "generated_at": "2026-05-20T00:00:00.000Z",
   "sectors": [
-    {
-      "id": "IT",
-      "name": "Information Tech",
-      "ko": "정보기술",
-      "color": "#f59e0b"
-    },
-    {
-      "id": "COMMS",
-      "name": "Communication Svc.",
-      "ko": "커뮤니케이션",
-      "color": "#a78bfa"
-    },
-    {
-      "id": "CONS_DISC",
-      "name": "Consumer Discr.",
-      "ko": "임의소비재",
-      "color": "#c084fc"
-    }
+    { "id": "IT",          "name": "Information Tech",      "ko": "정보기술",     "color": "#f59e0b" },
+    { "id": "COMMS",       "name": "Communication Svc.",    "ko": "커뮤니케이션",  "color": "#a78bfa" },
+    { "id": "CONS_DISC",   "name": "Consumer Discr.",       "ko": "임의소비재",   "color": "#c084fc" },
+    { "id": "HEALTH",      "name": "Health Care",           "ko": "헬스케어",     "color": "#4ade80" },
+    { "id": "FINANCIALS",  "name": "Financials",            "ko": "금융",         "color": "#22d3ee" }
   ],
   "stocks": [
-    {
-      "t": "AAPL",
-      "n": "Apple",
-      "m": "US",
-      "s": "IT",
-      "cap": 3450,
-      "per": 33.2,
-      "pbr": 51.3,
-      "vol": 52.1,
-      "div": 0.5,
-      "chg": -1.03,
-      "price": 585
-    },
-    {
-      "t": "MSFT",
-      "n": "Microsoft",
-      "m": "US",
-      "s": "IT",
-      "cap": 3210,
-      "per": 36.1,
-      "pbr": 12.4,
-      "vol": 21.3,
-      "div": 0.8,
-      "chg": 3.96,
-      "price": 323
-    },
-    {
-      "t": "NVDA",
-      "n": "NVIDIA",
-      "m": "US",
-      "s": "IT",
-      "cap": 2940,
-      "per": 65.4,
-      "pbr": 48,
-      "vol": 380.1,
-      "div": 0.03,
-      "chg": 0.65,
-      "price": 874
-    },
-    {
-      "t": "GOOGL",
-      "n": "Alphabet",
-      "m": "US",
-      "s": "COMMS",
-      "cap": 2180,
-      "per": 26.3,
-      "pbr": 7.4,
-      "vol": 22.1,
-      "div": 0.4,
-      "chg": 0.27,
-      "price": 425
-    },
-    {
-      "t": "TSLA",
-      "n": "Tesla",
-      "m": "US",
-      "s": "CONS_DISC",
-      "cap": 870,
-      "per": 72.4,
-      "pbr": 13,
-      "vol": 95.1,
-      "div": 0,
-      "chg": -2.22,
-      "price": 835
-    },
-    {
-      "t": "AMZN",
-      "n": "Amazon",
-      "m": "US",
-      "s": "CONS_DISC",
-      "cap": 1980,
-      "per": 44.2,
-      "pbr": 8.1,
-      "vol": 35.4,
-      "div": 0,
-      "chg": -2.83,
-      "price": 539
-    }
+    { "t": "AAPL",   "n": "Apple",       "m": "US", "s": "IT",        "cap": 3450, "per": 33.2, "pbr": 51.3, "vol": 52.1,  "div": 0.5,  "chg": -1.03, "price": 585 },
+    { "t": "MSFT",   "n": "Microsoft",   "m": "US", "s": "IT",        "cap": 3210, "per": 36.1, "pbr": 12.4, "vol": 21.3,  "div": 0.8,  "chg":  3.96, "price": 323 },
+    { "t": "NVDA",   "n": "NVIDIA",      "m": "US", "s": "IT",        "cap": 2940, "per": 65.4, "pbr": 48.0, "vol": 380.1, "div": 0.03, "chg":  0.65, "price": 874 },
+    { "t": "GOOGL",  "n": "Alphabet",    "m": "US", "s": "COMMS",     "cap": 2180, "per": 26.3, "pbr":  7.4, "vol": 22.1,  "div": 0.4,  "chg":  0.27, "price": 425 },
+    { "t": "TSLA",   "n": "Tesla",       "m": "US", "s": "CONS_DISC", "cap":  870, "per": 72.4, "pbr": 13.0, "vol": 95.1,  "div": 0.0,  "chg": -2.22, "price": 835 },
+    { "t": "AMZN",   "n": "Amazon",      "m": "US", "s": "CONS_DISC", "cap": 1980, "per": 44.2, "pbr":  8.1, "vol": 35.4,  "div": 0.0,  "chg": -2.83, "price": 539 },
+    { "t": "005930", "n": "삼성전자",    "m": "KR", "s": "IT",        "cap":  230, "per": 14.2, "pbr":  1.3, "vol": 18.5,  "div": 2.1,  "chg":  0.0,  "price": 61.5 },
+    { "t": "000660", "n": "SK하이닉스",  "m": "KR", "s": "IT",        "cap":  100, "per": 11.8, "pbr":  1.8, "vol":  4.2,  "div": 0.8,  "chg":  0.0,  "price": 127.7 },
+    { "t": "005380", "n": "현대자동차",  "m": "KR", "s": "CONS_DISC", "cap":   42, "per":  5.1, "pbr":  0.7, "vol":  1.5,  "div": 3.5,  "chg":  0.0,  "price": 160.0 },
+    { "t": "035420", "n": "NAVER",       "m": "KR", "s": "COMMS",     "cap":   23, "per": 22.4, "pbr":  1.9, "vol":  0.8,  "div": 0.3,  "chg":  0.0,  "price": 133.8 },
+    { "t": "035720", "n": "카카오",      "m": "KR", "s": "COMMS",     "cap":   13, "per": 35.1, "pbr":  1.2, "vol":  3.1,  "div": 0.1,  "chg":  0.0,  "price": 30.8 },
+    { "t": "207940", "n": "삼성바이오",  "m": "KR", "s": "HEALTH",    "cap":   46, "per": 68.2, "pbr":  6.4, "vol":  0.2,  "div": 0.0,  "chg":  0.0,  "price": 600.0 },
+    { "t": "068270", "n": "셀트리온",    "m": "KR", "s": "HEALTH",    "cap":   27, "per": 41.3, "pbr":  3.1, "vol":  0.6,  "div": 0.2,  "chg":  0.0,  "price": 153.8 },
+    { "t": "105560", "n": "KB금융",      "m": "KR", "s": "FINANCIALS","cap":   23, "per":  6.8, "pbr":  0.6, "vol":  0.9,  "div": 4.2,  "chg":  0.0,  "price": 61.5 }
   ]
 }

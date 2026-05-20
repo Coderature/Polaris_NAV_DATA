@@ -62,10 +62,33 @@ function mergeFinnhubQuotes(stocks: StockRow[], quotes: Awaited<ReturnType<typeo
   }
 }
 
+export interface RiskExtraction {
+  source: string;
+  sourceUrl: string;
+  company: string;
+  ticker?: string;
+  riskType: string;
+  riskSeverity: 'low' | 'medium' | 'high';
+  summary: string;
+  keywords: string[];
+  upstream: string[];
+  downstream: string[];
+  asOf: string;
+}
+
+export interface RawDocument {
+  source: string;
+  title: string;
+  date: string;
+  url: string;
+  text: string;
+  metadata?: Record<string, unknown>;
+}
+
 interface PolarisNavDataFile extends TreemapDataFile {
   generatedAt?: string;
-  documents?: unknown[];
-  extractedRisks?: unknown[];
+  documents?: RawDocument[];
+  extractedRisks?: RiskExtraction[];
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -90,6 +113,8 @@ export async function loadTreemapData(): Promise<{
   sectors: SectorDef[];
   stocks: StockRow[];
   generatedAt: string;
+  extractedRisks: RiskExtraction[];
+  documents: RawDocument[];
 }> {
   const pipelineData = await loadPipelineData();
   const data = pipelineData && pipelineData.sectors && pipelineData.stocks
@@ -112,5 +137,11 @@ export async function loadTreemapData(): Promise<{
   const latestFetch = quotes.reduce((max, q) => Math.max(max, q.fetchedAt.getTime()), 0);
   const generatedAt = latestFetch > 0 ? new Date(latestFetch).toISOString() : snap;
 
-  return { sectors: data.sectors, stocks, generatedAt };
+  return {
+    sectors: data.sectors,
+    stocks,
+    generatedAt,
+    extractedRisks: pipelineData?.extractedRisks ?? [],
+    documents: pipelineData?.documents ?? [],
+  };
 }

@@ -4,56 +4,74 @@ import path from 'path';
 import { fetchDartReports } from './crawl/dartCrawler.js';
 import { fetchNaverFinanceNews } from './crawl/naverNewsCrawler.js';
 import { extractPdfDocuments } from './crawl/pdfExtract.js';
+import { fetchKrStocks } from './crawl/krStockCrawler.js';
 import { extractFinancialRisks } from './llm/extractor.js';
-import type { PipelineOutput, SectorDef, StockRow } from './types.js';
+import type { PipelineOutput, RawDocument, SectorDef, StockRow } from './types.js';
+
+const KR_COMPANIES = ['삼성전자', 'SK하이닉스', '현대자동차', 'NAVER', '카카오'];
 
 async function loadExistingTreemapData() {
   const sourcePath = path.resolve('public', 'treemap_data.json');
   if (!fs.existsSync(sourcePath)) return null;
   try {
     const raw = fs.readFileSync(sourcePath, 'utf-8');
-    const parsed = JSON.parse(raw) as { sectors?: SectorDef[]; stocks?: StockRow[]; generated_at?: string };
-    return parsed;
-  } catch (error) {
-    console.warn('기존 treemap_data.json을 읽는 중 오류가 발생했습니다.', error);
+    return JSON.parse(raw) as { sectors?: SectorDef[]; stocks?: StockRow[]; generated_at?: string };
+  } catch {
     return null;
   }
 }
 
 async function main() {
-  console.log('1/4 DART 공시 크롤링 시작...');
-  const dartDocs = await fetchDartReports('삼성전자', 1, 8);
+  console.log('1/5 DART 공시 크롤링 시작...');
+  const dartDocs: RawDocument[] = [];
+  for (const company of KR_COMPANIES) {
+    const docs = await fetchDartReports(company, 1, 3);
+    dartDocs.push(...docs);
+    console.log(`  ✓ ${company}: ${docs.length}건`);
+  }
 
-  console.log('2/4 네이버 금융 뉴스 크롤링 시작...');
-  const newsDocs = await fetchNaverFinanceNews('반도체', 8);
+  console.log('2/5 네이버 금융 뉴스 크롤링 시작...');
+  const newsDocs = await fetchNaverFinanceNews('코스피 주식', 6);
+  console.log(`  ✓ ${newsDocs.length}건`);
 
-  console.log('3/4 PDF 자료 추출 시작...');
-  const pdfDocs = await extractPdfDocuments([
-    // 여기에는 실제 PDF URL을 추가하세요.
-    'https://example.com/sample-report.pdf',
-  ]);
+  console.log('3/5 PDF 자료 추출 시작...');
+  const pdfDocs = await extractPdfDocuments([]);
+
+  console.log('4/5 KR 실시간 주가 수집 시작...');
+  const krStocks = await fetchKrStocks();
+  console.log(`  ✓ ${krStocks.length}개 종목 시세 수집`);
 
   const documents = [...dartDocs, ...newsDocs, ...pdfDocs];
-  console.log(`총 ${documents.length}건 문서를 확보했습니다.`);
+  console.log(`총 ${documents.length}건 문서 확보`);
 
-  console.log('4/4 LLM 기반 리스크 추출 수행...');
+  console.log('5/5 LLM 기반 리스크 추출 수행...');
   const extractedRisks = await extractFinancialRisks(documents.slice(0, 8));
 
   const existing = await loadExistingTreemapData();
+
+  // KR 실시간 시세를 기존 stocks에 병합
+  const baseStocks: StockRow[] = existing?.stocks ?? [];
+  const krTickerSet = new Set(krStocks.map((s) => s.t));
+  const mergedStocks: StockRow[] = [
+    ...baseStocks.filter((s) => !krTickerSet.has(s.t)),
+    ...krStocks,
+  ];
+
   const output: PipelineOutput = {
-    generatedAt: existing?.generated_at ?? new Date().toISOString(),
+    generatedAt: new Date().toISOString(),
     sectors: existing?.sectors,
-    stocks: existing?.stocks,
+    stocks: mergedStocks,
     documents,
     extractedRisks,
   };
 
   const outPath = path.resolve('public', 'polaris_nav_data.json');
   fs.writeFileSync(outPath, JSON.stringify(output, null, 2), 'utf-8');
-  console.log(`성공: ${outPath}에 크롤링 결과를 저장했습니다.`);
+  console.log(`\n✅ 완료: ${outPath}`);
+  console.log(`   종목 ${mergedStocks.length}개 (KR ${krStocks.length}개 실시간) · 문서 ${documents.length}건 · 리스크 ${extractedRisks.length}건`);
 }
 
-main().catch((error) => {
-  console.error('데이터 파이프라인 실행 중 오류가 발생했습니다:', error);
+main().catch((err) => {
+  console.error('파이프라인 오류:', err);
   process.exit(1);
 });

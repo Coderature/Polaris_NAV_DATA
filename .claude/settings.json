@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('public/treemap_data.json','utf-8'\\)\\); const kr=d.stocks.filter\\(s=>s.m==='KR'\\); console.log\\('KR stocks:', kr.map\\(s=>s.t+' '+s.n\\).join\\(', '\\)\\); console.log\\('Total:', d.stocks.length, '/ KR:', kr.length\\)\")",
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('public/treemap_data.json','utf-8'\\)\\); console.log\\('Sectors:', JSON.stringify\\(d.sectors.map\\(s=>s.id+':'+s.ko\\)\\)\\); console.log\\('US stocks:', d.stocks.map\\(s=>s.t\\).join\\(', '\\)\\)\")",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/yahoo-finance2/package.json'\\).version\\)\")",
+      "Bash(node -e \"const m = require\\('yahoo-finance2'\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(node -e \"const m = require\\('yahoo-finance2'\\).default; console.log\\(typeof m, m.constructor?.name, Object.keys\\(m\\).slice\\(0,5\\)\\)\")",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

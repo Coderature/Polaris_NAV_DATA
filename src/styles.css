@@ -817,6 +817,28 @@ body::before {
   font-family: 'JetBrains Mono', monospace;
 }
 
+.news-item .news-summary {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+  margin: 4px 0;
+}
+
+.news-item .news-link {
+  font-size: 10px;
+  color: var(--accent-blue, #60a5fa);
+  text-decoration: none;
+}
+
+.news-item .news-link:hover {
+  text-decoration: underline;
+}
+
+.risk-badge {
+  font-size: 10px;
+  margin-right: 4px;
+}
+
 /* ── Watch Button ── */
 .watch-btn {
   position: absolute;
