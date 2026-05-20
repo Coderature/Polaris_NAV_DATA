@@ -1,4 +1,4 @@
-import type { MarketCode, SectorDef, StockRow, TreemapDataFile } from '../types';
+import type { MarketCode, RawDocument, RiskExtraction, SectorDef, StockRow, TreemapDataFile } from '../types';
 import { fetchAll } from './finnhubClient';
 
 /** Deterministic demo % change per ticker (fallback when JSON has no `chg`). */
@@ -62,29 +62,6 @@ function mergeFinnhubQuotes(stocks: StockRow[], quotes: Awaited<ReturnType<typeo
   }
 }
 
-export interface RiskExtraction {
-  source: string;
-  sourceUrl: string;
-  company: string;
-  ticker?: string;
-  riskType: string;
-  riskSeverity: 'low' | 'medium' | 'high';
-  summary: string;
-  keywords: string[];
-  upstream: string[];
-  downstream: string[];
-  asOf: string;
-}
-
-export interface RawDocument {
-  source: string;
-  title: string;
-  date: string;
-  url: string;
-  text: string;
-  metadata?: Record<string, unknown>;
-}
-
 interface PolarisNavDataFile extends TreemapDataFile {
   generatedAt?: string;
   documents?: RawDocument[];
@@ -113,8 +90,8 @@ export async function loadTreemapData(): Promise<{
   sectors: SectorDef[];
   stocks: StockRow[];
   generatedAt: string;
-  extractedRisks: RiskExtraction[];
   documents: RawDocument[];
+  extractedRisks: RiskExtraction[];
 }> {
   const pipelineData = await loadPipelineData();
   const data = pipelineData && pipelineData.sectors && pipelineData.stocks
@@ -137,11 +114,8 @@ export async function loadTreemapData(): Promise<{
   const latestFetch = quotes.reduce((max, q) => Math.max(max, q.fetchedAt.getTime()), 0);
   const generatedAt = latestFetch > 0 ? new Date(latestFetch).toISOString() : snap;
 
-  return {
-    sectors: data.sectors,
-    stocks,
-    generatedAt,
-    extractedRisks: pipelineData?.extractedRisks ?? [],
-    documents: pipelineData?.documents ?? [],
-  };
+  const documents = (pipelineData as PolarisNavDataFile | null)?.documents ?? [];
+  const extractedRisks = (pipelineData as PolarisNavDataFile | null)?.extractedRisks ?? [];
+
+  return { sectors: data.sectors, stocks, generatedAt, documents, extractedRisks };
 }

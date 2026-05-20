@@ -1,5 +1,31 @@
 export type MarketCode = 'US' | 'KR';
 
+export interface RawDocument {
+  source: 'dart' | 'naver' | 'pdf' | string;
+  title: string;
+  date: string;
+  url: string;
+  text: string;
+  metadata?: Record<string, unknown>;
+}
+
+export type RiskSeverity = 'low' | 'medium' | 'high';
+
+export interface RiskExtraction {
+  source: string;
+  sourceUrl: string;
+  company: string;
+  ticker?: string;
+  sector?: string;
+  riskType: string;
+  riskSeverity: RiskSeverity;
+  summary: string;
+  keywords: string[];
+  upstream: string[];
+  downstream: string[];
+  asOf: string;
+}
+
 /** Sprint 2+ provider wiring; Sprint 1 stays on `mock`. */
 export type DataSourceType = 'live' | 'delayed' | 'cached' | 'mock';
 
