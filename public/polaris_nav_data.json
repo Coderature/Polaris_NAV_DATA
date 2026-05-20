@@ -1,0 +1,561 @@
+{
+  "generatedAt": "2026-05-19T18:09:05.325Z",
+  "sectors": [
+    {
+      "id": "IT",
+      "name": "Information Tech",
+      "ko": "정보기술",
+      "color": "#f59e0b"
+    },
+    {
+      "id": "COMMS",
+      "name": "Communication Svc.",
+      "ko": "커뮤니케이션",
+      "color": "#a78bfa"
+    },
+    {
+      "id": "CONS_DISC",
+      "name": "Consumer Discr.",
+      "ko": "임의소비재",
+      "color": "#c084fc"
+    },
+    {
+      "id": "HEALTH",
+      "name": "Health Care",
+      "ko": "헬스케어",
+      "color": "#4ade80"
+    },
+    {
+      "id": "FINANCIALS",
+      "name": "Financials",
+      "ko": "금융",
+      "color": "#22d3ee"
+    }
+  ],
+  "stocks": [
+    {
+      "t": "AAPL",
+      "n": "Apple",
+      "m": "US",
+      "s": "IT",
+      "cap": 3450,
+      "per": 33.2,
+      "pbr": 51.3,
+      "vol": 52.1,
+      "div": 0.5,
+      "chg": -1.03,
+      "price": 585
+    },
+    {
+      "t": "MSFT",
+      "n": "Microsoft",
+      "m": "US",
+      "s": "IT",
+      "cap": 3210,
+      "per": 36.1,
+      "pbr": 12.4,
+      "vol": 21.3,
+      "div": 0.8,
+      "chg": 3.96,
+      "price": 323
+    },
+    {
+      "t": "NVDA",
+      "n": "NVIDIA",
+      "m": "US",
+      "s": "IT",
+      "cap": 2940,
+      "per": 65.4,
+      "pbr": 48,
+      "vol": 380.1,
+      "div": 0.03,
+      "chg": 0.65,
+      "price": 874
+    },
+    {
+      "t": "GOOGL",
+      "n": "Alphabet",
+      "m": "US",
+      "s": "COMMS",
+      "cap": 2180,
+      "per": 26.3,
+      "pbr": 7.4,
+      "vol": 22.1,
+      "div": 0.4,
+      "chg": 0.27,
+      "price": 425
+    },
+    {
+      "t": "TSLA",
+      "n": "Tesla",
+      "m": "US",
+      "s": "CONS_DISC",
+      "cap": 870,
+      "per": 72.4,
+      "pbr": 13,
+      "vol": 95.1,
+      "div": 0,
+      "chg": -2.22,
+      "price": 835
+    },
+    {
+      "t": "AMZN",
+      "n": "Amazon",
+      "m": "US",
+      "s": "CONS_DISC",
+      "cap": 1980,
+      "per": 44.2,
+      "pbr": 8.1,
+      "vol": 35.4,
+      "div": 0,
+      "chg": -2.83,
+      "price": 539
+    },
+    {
+      "t": "005930",
+      "n": "삼성전자",
+      "m": "KR",
+      "s": "IT",
+      "cap": 1391.6,
+      "per": null,
+      "pbr": null,
+      "vol": 0,
+      "div": 0,
+      "price": 211.92,
+      "chg": -1.96,
+      "source": "live",
+      "sourceLabel": "Yahoo Finance 실시간",
+      "asOf": "2026-05-19T18:08:36.612Z"
+    },
+    {
+      "t": "000660",
+      "n": "SK하이닉스",
+      "m": "KR",
+      "s": "IT",
+      "cap": 952.8,
+      "per": null,
+      "pbr": null,
+      "vol": 0,
+      "div": 0,
+      "price": 1342.31,
+      "chg": -5.16,
+      "source": "live",
+      "sourceLabel": "Yahoo Finance 실시간",
+      "asOf": "2026-05-19T18:08:37.192Z"
+    },
+    {
+      "t": "005380",
+      "n": "현대자동차",
+      "m": "KR",
+      "s": "CONS_DISC",
+      "cap": 121.7,
+      "per": null,
+      "pbr": null,
+      "vol": 0,
+      "div": 0,
+      "price": 464.62,
+      "chg": -8.9,
+      "source": "live",
+      "sourceLabel": "Yahoo Finance 실시간",
+      "asOf": "2026-05-19T18:08:37.794Z"
+    },
+    {
+      "t": "035420",
+      "n": "NAVER",
+      "m": "KR",
+      "s": "COMMS",
+      "cap": 22.8,
+      "per": null,
+      "pbr": null,
+      "vol": 0,
+      "div": 0,
+      "price": 152.38,
+      "chg": -0.95,
+      "source": "live",
+      "sourceLabel": "Yahoo Finance 실시간",
+      "asOf": "2026-05-19T18:08:38.319Z"
+    },
+    {
+      "t": "035720",
+      "n": "카카오",
+      "m": "KR",
+      "s": "COMMS",
+      "cap": 14.1,
+      "per": null,
+      "pbr": null,
+      "vol": 0,
+      "div": 0,
+      "price": 32,
+      "chg": -2,
+      "source": "live",
+      "sourceLabel": "Yahoo Finance 실시간",
+      "asOf": "2026-05-19T18:08:38.810Z"
+    },
+    {
+      "t": "207940",
+      "n": "삼성바이오로직스",
+      "m": "KR",
+      "s": "HEALTH",
+      "cap": 47.9,
+      "per": null,
+      "pbr": null,
+      "vol": 0,
+      "div": 0,
+      "price": 1035.38,
+      "chg": -2.89,
+      "source": "live",
+      "sourceLabel": "Yahoo Finance 실시간",
+      "asOf": "2026-05-19T18:08:39.313Z"
+    },
+    {
+      "t": "068270",
+      "n": "셀트리온",
+      "m": "KR",
+      "s": "HEALTH",
+      "cap": 30.6,
+      "per": null,
+      "pbr": null,
+      "vol": 0,
+      "div": 0,
+      "price": 140.38,
+      "chg": -0.38,
+      "source": "live",
+      "sourceLabel": "Yahoo Finance 실시간",
+      "asOf": "2026-05-19T18:08:39.803Z"
+    },
+    {
+      "t": "105560",
+      "n": "KB금융",
+      "m": "KR",
+      "s": "FINANCIALS",
+      "cap": 41.7,
+      "per": null,
+      "pbr": null,
+      "vol": 0,
+      "div": 0,
+      "price": 117.54,
+      "chg": -0.13,
+      "source": "live",
+      "sourceLabel": "Yahoo Finance 실시간",
+      "asOf": "2026-05-19T18:08:40.287Z"
+    }
+  ],
+  "documents": [
+    {
+      "source": "dart",
+      "title": "삼성전자 · 동일인등출자계열회사와의상품ㆍ용역거래변경",
+      "date": "20260515",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002812",
+      "text": "삼성전자의 공시 제목은 동일인등출자계열회사와의상품ㆍ용역거래변경이며, 접수일은 20260515입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002812",
+      "metadata": {
+        "corpName": "삼성전자",
+        "receiptNo": "20260515002812",
+        "stockCode": "005930"
+      }
+    },
+    {
+      "source": "dart",
+      "title": "삼성전자 · 동일인등출자계열회사와의상품ㆍ용역거래변경",
+      "date": "20260515",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002790",
+      "text": "삼성전자의 공시 제목은 동일인등출자계열회사와의상품ㆍ용역거래변경이며, 접수일은 20260515입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002790",
+      "metadata": {
+        "corpName": "삼성전자",
+        "receiptNo": "20260515002790",
+        "stockCode": "005930"
+      }
+    },
+    {
+      "source": "dart",
+      "title": "삼성전자 · 동일인등출자계열회사와의상품ㆍ용역거래변경",
+      "date": "20260515",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002770",
+      "text": "삼성전자의 공시 제목은 동일인등출자계열회사와의상품ㆍ용역거래변경이며, 접수일은 20260515입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002770",
+      "metadata": {
+        "corpName": "삼성전자",
+        "receiptNo": "20260515002770",
+        "stockCode": "005930"
+      }
+    },
+    {
+      "source": "dart",
+      "title": "SK하이닉스 · 임원ㆍ주요주주특정증권등소유상황보고서",
+      "date": "20260515",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002407",
+      "text": "SK하이닉스의 공시 제목은 임원ㆍ주요주주특정증권등소유상황보고서이며, 접수일은 20260515입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002407",
+      "metadata": {
+        "corpName": "SK하이닉스",
+        "receiptNo": "20260515002407",
+        "stockCode": "000660"
+      }
+    },
+    {
+      "source": "dart",
+      "title": "SK하이닉스 · 분기보고서 (2026.03)",
+      "date": "20260515",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002287",
+      "text": "SK하이닉스의 공시 제목은 분기보고서 (2026.03)이며, 접수일은 20260515입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002287",
+      "metadata": {
+        "corpName": "SK하이닉스",
+        "receiptNo": "20260515002287",
+        "stockCode": "000660"
+      }
+    },
+    {
+      "source": "dart",
+      "title": "SK하이닉스 · 주요사항보고서(자기주식처분결정)",
+      "date": "20260513",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260513000549",
+      "text": "SK하이닉스의 공시 제목은 주요사항보고서(자기주식처분결정)이며, 접수일은 20260513입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260513000549",
+      "metadata": {
+        "corpName": "SK하이닉스",
+        "receiptNo": "20260513000549",
+        "stockCode": "000660"
+      }
+    },
+    {
+      "source": "dart",
+      "title": "현대자동차 · 기업설명회(IR)개최(안내공시)              ",
+      "date": "20260518",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260518800599",
+      "text": "현대자동차의 공시 제목은 기업설명회(IR)개최(안내공시)              이며, 접수일은 20260518입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260518800599",
+      "metadata": {
+        "corpName": "현대자동차",
+        "receiptNo": "20260518800599",
+        "stockCode": "005380"
+      }
+    },
+    {
+      "source": "dart",
+      "title": "현대자동차 · 분기보고서 (2026.03)",
+      "date": "20260515",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002418",
+      "text": "현대자동차의 공시 제목은 분기보고서 (2026.03)이며, 접수일은 20260515입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002418",
+      "metadata": {
+        "corpName": "현대자동차",
+        "receiptNo": "20260515002418",
+        "stockCode": "005380"
+      }
+    },
+    {
+      "source": "dart",
+      "title": "현대자동차 · 특수관계인으로부터기타유가증권매수",
+      "date": "20260511",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260511000643",
+      "text": "현대자동차의 공시 제목은 특수관계인으로부터기타유가증권매수이며, 접수일은 20260511입니다. 공시 원문: https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260511000643",
+      "metadata": {
+        "corpName": "현대자동차",
+        "receiptNo": "20260511000643",
+        "stockCode": "005380"
+      }
+    },
+    {
+      "source": "naver",
+      "title": "[단독] 신규 물량 완판인데 기존 투자자는 손절… 개인투자용 국채 시장...",
+      "date": "2026-05-19",
+      "url": "https://www.kmib.co.kr/article/view.asp?arcid=1779182377&code=11151300&cp=nv",
+      "text": "코스피시장으로의 ‘머니 무브’ 가능성도 있다. 주식시장 활황에 연 3~4%대 이자를 받고자 수년간 돈이 묶이는 개인투자용 국채의 매력이 상대적으로 떨어진다. 대외 요인이 더해지며 향후 중도 해지 후 재가입...",
+      "metadata": {
+        "query": "코스피 주식"
+      }
+    },
+    {
+      "source": "naver",
+      "title": "외국인 5.7조 순매도… 주가 급락, 환율도 뛰어",
+      "date": "2026-05-19",
+      "url": "https://www.chosun.com/economy/economy_general/2026/05/20/WVWSHY7MMVDTPGXRGSBAS3OJBM/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
+      "text": "7원) 이후 약 한 달 반 만에 최고치다. 이경민 대신증권 FICC리서치부장은 “글로벌 국채 금리 상승 등으로 주식 등 위험 자산 투자 심리가 얼어붙으며 외국인 매도세가 커졌고, 코스피와 환율이 흔들렸다”고 했다.",
+      "metadata": {
+        "query": "코스피 주식"
+      }
+    },
+    {
+      "source": "naver",
+      "title": "이달 들어 종목 86%가 ‘하락·제자리’",
+      "date": "2026-05-19",
+      "url": "https://www.chosun.com/economy/money/2026/05/20/PWN3DEODDRHP7P4V5EVTCSKCKE/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
+      "text": "반도체 대형주 쏠림 심화 서울의 한 공기업에 다니는 양모(30)씨는 최근 주식 계좌를 열어볼 때마다... 코스피 내에서도 대형주와 중소형주 간 격차는 뚜렷했다. 이달 코스피 대형주 지수는 10.8% 상승했지만 코스피...",
+      "metadata": {
+        "query": "코스피 주식"
+      }
+    },
+    {
+      "source": "naver",
+      "title": "[금융뒷담] “외국인 통합계좌, 하나증권도 시작했는데 우리는 뭐 했나...",
+      "date": "2026-05-19",
+      "url": "https://www.kmib.co.kr/article/view.asp?arcid=1779180416&code=11151300&cp=nv",
+      "text": "외국인 통합계좌는 해외 투자자가 현지 증권사를 통해 한국 주식을 직접 거래할 수 있도록 한 서비스다.... 미국 온라인 커뮤니티 레딧에서는 삼성전자와 SK하이닉스 매수 방법을 묻거나 코스피 유망 종목을 추천해달라는...",
+      "metadata": {
+        "query": "코스피 주식"
+      }
+    },
+    {
+      "source": "naver",
+      "title": "주식창만 보는 70대 개미들… 매매 횟수 20대의 4배",
+      "date": "2026-05-19",
+      "url": "https://www.chosun.com/economy/money/2026/05/20/UWDP62LMTRA6RNLX6JQWV2GNTE/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news",
+      "text": "19일 코스피가 3.25% 급락하는 등 널뛰기 장세를 보였지만, 앞서 코스피가 잇따라 사상 최고가를 경신하고 주요국 1위 상승률을 보이자 70대 이상 개인들의 주식 투자도 활발해지고 있다. 증권가에서는 은퇴자가 많은...",
+      "metadata": {
+        "query": "코스피 주식"
+      }
+    },
+    {
+      "source": "naver",
+      "title": "외국인 6조 순매도… 코스피 3%대 하락",
+      "date": "2026-05-19",
+      "url": "https://www.donga.com/news/Economy/article/all/20260519/133954026/2",
+      "text": "글로벌 국채 금리 상승, 반도체 공급 부족에 대한 우려가 코스피를 7,200대로 끌어내렸다. 외국인... 외국인은 7일부터 19일까지 유가증권시장에서 9거래일 연속 순매도하며 총 41조8000억 원어치 주식을 팔았다.",
+      "metadata": {
+        "query": "코스피 주식"
+      }
+    }
+  ],
+  "extractedRisks": [
+    {
+      "source": "dart",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002812",
+      "company": "삼성전자",
+      "ticker": "005930",
+      "sector": "전자",
+      "riskType": "공급망",
+      "riskSeverity": "medium",
+      "summary": "삼성전자의 동일인등출자계열회사와의 상품ㆍ용역거래변경",
+      "keywords": [
+        "삼성전자",
+        "공급망",
+        "거래변경"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "asOf": "2026-05-15"
+    },
+    {
+      "source": "dart",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002790",
+      "company": "삼성전자",
+      "ticker": "005930",
+      "sector": "전자",
+      "riskType": "공급망",
+      "riskSeverity": "medium",
+      "summary": "삼성전자의 동일인등출자계열회사와의 상품ㆍ용역거래변경",
+      "keywords": [
+        "삼성전자",
+        "공급망",
+        "거래변경"
+      ],
+      "upstream": [
+        "unknown"
+      ],
+      "downstream": [
+        "unknown"
+      ],
+      "asOf": "2026-05-15"
+    },
+    {
+      "source": "dart",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002770",
+      "company": "삼성전자",
+      "ticker": "005930",
+      "sector": "전자",
+      "riskType": "공급망",
+      "riskSeverity": "medium",
+      "summary": "삼성전자의 동일인등출자계열회사와의 상품ㆍ용역거래 변경",
+      "keywords": [
+        "삼성전자",
+        "공급망",
+        "거래 변경"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "asOf": "2026-05-15"
+    },
+    {
+      "source": "dart",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002407",
+      "company": "SK하이닉스",
+      "ticker": "000660",
+      "sector": "반도체",
+      "riskType": "공급망",
+      "riskSeverity": "low",
+      "summary": "SK하이닉스의 임원 및 주요 주주 특정 증권 등 소유 상황 보고서가 공시되었습니다.",
+      "keywords": [
+        "SK하이닉스",
+        "임원",
+        "주요주주",
+        "공시"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "asOf": "2026-05-15"
+    },
+    {
+      "source": "dart",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002287",
+      "company": "SK하이닉스",
+      "ticker": "000660",
+      "sector": "반도체",
+      "riskType": "공급망",
+      "riskSeverity": "medium",
+      "summary": "SK하이닉스의 분기보고서가 공시되었습니다.",
+      "keywords": [
+        "SK하이닉스",
+        "분기보고서"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "asOf": "2026-05-15"
+    },
+    {
+      "source": "dart",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260513000549",
+      "company": "SK하이닉스",
+      "ticker": "000660",
+      "sector": "반도체",
+      "riskType": "재무",
+      "riskSeverity": "medium",
+      "summary": "SK하이닉스의 자기주식 처분 결정에 대한 보고서입니다.",
+      "keywords": [
+        "자기주식",
+        "처분"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "asOf": "2026-05-13"
+    },
+    {
+      "source": "dart",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260518800599",
+      "company": "현대자동차",
+      "ticker": "005380",
+      "sector": "자동차",
+      "riskType": "unknown",
+      "riskSeverity": "medium",
+      "summary": "현대자동차의 기업설명회(IR)개최 안내공시",
+      "keywords": [
+        "현대자동차",
+        "기업설명회",
+        "IR"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "asOf": "2026-05-18"
+    },
+    {
+      "source": "dart",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002418",
+      "company": "현대자동차",
+      "ticker": "005380",
+      "sector": "자동차",
+      "riskType": "재무",
+      "riskSeverity": "medium",
+      "summary": "현대자동차의 분기보고서가 제출되었습니다.",
+      "keywords": [
+        "현대자동차",
+        "분기보고서"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "asOf": "2026-05-15"
+    }
+  ]
+}

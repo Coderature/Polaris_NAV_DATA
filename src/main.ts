@@ -1,6 +1,7 @@
 import './styles.css';
 import * as THREE from 'three';
 import { loadTreemapData } from './data/loadTreemapData';
+import { generateStockSummary } from './data/groqSummary';
 import {
   type MarketCode,
   type SectorDef,
@@ -116,7 +117,7 @@ function aiSummary(stocks: StockRow[], sectors: SectorDef[], st: StockRow): stri
 async function main() {
   await runSplashSequence();
 
-  const { sectors, stocks, generatedAt } = await loadTreemapData();
+  const { sectors, stocks, generatedAt, extractedRisks, documents } = await loadTreemapData();
   const secById = Object.fromEntries(sectors.map((s) => [s.id, s])) as Record<string, SectorDef>;
 
   const canvas = document.getElementById('scene') as HTMLCanvasElement;
@@ -240,6 +241,54 @@ async function main() {
     }
   }
 
+  const severityLabel: Record<string, string> = { high: '🔴 고', medium: '🟡 중', low: '🟢 저' };
+
+  function renderRisksForStock(st: StockRow) {
+    const newsList = document.getElementById('news-list')!;
+    const dartList = document.getElementById('dart-list')!;
+
+    const matchRisk = (r: { company: string; ticker?: string }) =>
+      r.company.includes(st.n) || st.n.includes(r.company) || r.ticker === st.t;
+
+    const risks = extractedRisks.filter(matchRisk);
+    const dartDocs = documents.filter(
+      (d) => d.source === 'dart' && matchRisk({ company: String(d.metadata?.corpName ?? ''), ticker: String(d.metadata?.stockCode ?? '') }),
+    );
+    const naverDocs = documents.filter(
+      (d) => d.source === 'naver' && (d.title.includes(st.n) || (d.metadata?.query as string ?? '').length > 0),
+    );
+
+    if (risks.length > 0) {
+      newsList.innerHTML = risks.slice(0, 4).map((r) => `
+        <div class="news-item">
+          <div class="news-title"><span class="risk-badge">${severityLabel[r.riskSeverity] ?? r.riskSeverity}</span> ${r.riskType}</div>
+          <div class="news-summary">${r.summary}</div>
+          ${r.keywords.length ? `<div class="news-meta">${r.keywords.slice(0, 4).join(' · ')}</div>` : ''}
+          <a class="news-link" href="${r.sourceUrl}" target="_blank" rel="noopener">원문 보기 ↗</a>
+        </div>`).join('');
+    } else if (naverDocs.length > 0) {
+      newsList.innerHTML = naverDocs.slice(0, 3).map((d) => `
+        <div class="news-item">
+          <div class="news-title">${d.title}</div>
+          <div class="news-meta">${d.date}</div>
+          <a class="news-link" href="${d.url}" target="_blank" rel="noopener">기사 보기 ↗</a>
+        </div>`).join('');
+    } else {
+      newsList.innerHTML = '<div class="news-item"><div class="news-meta">이 종목의 리스크 데이터가 없습니다. 파이프라인을 재실행하세요.</div></div>';
+    }
+
+    if (dartDocs.length > 0) {
+      dartList.innerHTML = dartDocs.slice(0, 3).map((d) => `
+        <div class="news-item">
+          <div class="news-title">${d.title}</div>
+          <div class="news-meta">${d.date}</div>
+          <a class="news-link" href="${d.url}" target="_blank" rel="noopener">공시 보기 ↗</a>
+        </div>`).join('');
+    } else {
+      dartList.innerHTML = '<div class="news-item"><div class="news-meta">공시 데이터가 없습니다.</div></div>';
+    }
+  }
+
   function openPanel(st: StockRow, mesh: THREE.Group | null) {
     currentStock = st;
     treemap.setHoveredSector(st.s);
@@ -284,21 +333,50 @@ async function main() {
 
     panel.classList.add('open');
     hintEl.classList.add('hide');
+    renderRisksForStock(st);
 
     pWatch.classList.toggle('on', isWatched(st.t));
     pWatch.textContent = isWatched(st.t) ? '★ Saved' : '☆ Save';
 
-    aiStatus.textContent = '데모 요약 생성 중…';
+    aiStatus.textContent = 'Groq AI 요약 생성 중…';
     aiContent.innerHTML = `
     <div class="skel skel-line w90"></div>
     <div class="skel skel-line w70"></div>
     <div class="skel skel-line w80"></div>
     <div class="skel skel-line w50"></div>`;
     if (aiTimer) clearTimeout(aiTimer);
-    aiTimer = setTimeout(() => {
-      aiStatus.textContent = '요약 · 규칙 기반';
+    const matchRisk = (r: { company: string; ticker?: string }) =>
+      r.company.includes(st.n) || st.n.includes(r.company) || r.ticker === st.t;
+    const relatedDocs = documents.filter(
+      (d) => d.title.includes(st.n) || st.n.includes(String(d.metadata?.corpName ?? '')),
+    );
+    const sectorPeers = stocks
+      .filter((s) => s.s === st.s && s.t !== st.t)
+      .sort((a, b) => b.cap - a.cap)
+      .slice(0, 4)
+      .map((s) => ({ name: s.n, cap: s.cap, chg: s.chg ?? 0 }));
+
+    generateStockSummary({
+      name: st.n,
+      sector: secById[st.s]?.ko ?? st.s,
+      market: st.m,
+      cap: `$${fmtBn(st.cap)}`,
+      chg: st.chg ?? 0,
+      per: st.per,
+      pbr: st.pbr,
+      div: st.div,
+      vol: st.vol,
+      risks: extractedRisks.filter(matchRisk),
+      documents: relatedDocs,
+      sectorPeers,
+    }).then((summary) => {
+      aiStatus.textContent = 'Groq AI · llama-3.3-70b';
+      aiContent.innerHTML = `<p style="margin:0;line-height:1.7;font-size:13px">${summary}</p>
+        <p style="margin:8px 0 0;color:var(--text-tertiary);font-size:11px">※ AI 생성 요약이며 투자 조언이 아닙니다.</p>`;
+    }).catch(() => {
+      aiStatus.textContent = '요약 · 규칙 기반 (폴백)';
       aiContent.innerHTML = aiSummary(stocks, sectors, st);
-    }, 1600 + Math.random() * 700);
+    });
   }
 
   function closePanel() {
