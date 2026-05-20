@@ -103,6 +103,42 @@ function resetBuildingInteractionScale(mesh: THREE.Group) {
   mesh.scale.set(xz, 1, xz);
 }
 
+function renderSummary(md: string): string {
+  const lines = md.split('\n');
+  const parts: string[] = [];
+  let bullets: string[] = [];
+
+  const flushBullets = () => {
+    if (bullets.length) {
+      parts.push(`<ul class="ai-bullets">${bullets.map((b) => `<li>${b}</li>`).join('')}</ul>`);
+      bullets = [];
+    }
+  };
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) { flushBullets(); continue; }
+
+    const headerMatch = line.match(/^\*\*(.+?)\*\*\s*$/);
+    if (headerMatch) {
+      flushBullets();
+      parts.push(`<div class="ai-section-title">${headerMatch[1]}</div>`);
+      continue;
+    }
+
+    const bulletMatch = line.match(/^[-•]\s+(.+)/);
+    if (bulletMatch) {
+      bullets.push(bulletMatch[1].replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'));
+      continue;
+    }
+
+    flushBullets();
+    parts.push(`<p class="ai-para">${line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')}</p>`);
+  }
+  flushBullets();
+  return parts.join('');
+}
+
 function aiSummary(stocks: StockRow[], sectors: SectorDef[], st: StockRow): string {
   const sec = sectors.find((s) => s.id === st.s)!;
   const dir = st.halted ? '거래정지 상태' : st.chg! >= 0 ? `오늘 +${st.chg!.toFixed(2)}%` : `오늘 ${st.chg!.toFixed(2)}%`;
@@ -145,6 +181,7 @@ async function main() {
   const pWatch = document.getElementById('p-watch')!;
   const aiStatus = document.getElementById('ai-status')!;
   const aiContent = document.getElementById('ai-content')!;
+  const aiDisclaimer = document.getElementById('ai-disclaimer')!;
   const hintEl = document.getElementById('hint')!;
 
   const modal = document.getElementById('modal')!;
@@ -371,11 +408,12 @@ async function main() {
       sectorPeers,
     }).then((summary) => {
       aiStatus.textContent = 'Groq AI · llama-3.3-70b';
-      aiContent.innerHTML = `<p style="margin:0;line-height:1.7;font-size:13px">${summary}</p>
-        <p style="margin:8px 0 0;color:var(--text-tertiary);font-size:11px">※ AI 생성 요약이며 투자 조언이 아닙니다.</p>`;
+      aiContent.innerHTML = renderSummary(summary);
+      aiDisclaimer.textContent = '⚠ AI 생성 요약이며 투자 조언이 아닙니다.';
     }).catch(() => {
       aiStatus.textContent = '요약 · 규칙 기반 (폴백)';
       aiContent.innerHTML = aiSummary(stocks, sectors, st);
+      aiDisclaimer.textContent = '⚠ 규칙 기반 요약이며 투자 조언이 아닙니다.';
     });
   }
 
