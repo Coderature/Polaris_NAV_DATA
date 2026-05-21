@@ -1,6 +1,7 @@
 import './styles.css';
 import * as THREE from 'three';
 import { loadTreemapData } from './data/loadTreemapData';
+import { initQuotesClient } from './data/quotesClient';
 import { generateStockSummary } from './data/groqSummary';
 import {
   type MarketCode,
@@ -78,7 +79,7 @@ function fmtBn(cap: number): string {
 }
 
 function fmtPrice(p: number, market: MarketCode): string {
-  if (market === 'KR') return `₩${(p * 1300).toLocaleString('ko-KR', { maximumFractionDigits: 0 })}`;
+  if (market === 'KR') return `₩${Math.round(p).toLocaleString('ko-KR')}`;
   return `$${p.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
@@ -202,9 +203,6 @@ async function main() {
       ? 'cached'
       : 'mock';
 
-  const finnhubNotice = 'Finnhub 무료 티어. 실패 시 데모 스냅샷으로 폴백.';
-  const finnhubPillText = document.getElementById('finnhub-pill-text');
-  if (finnhubPillText) finnhubPillText.textContent = finnhubNotice;
 
   function buildingFromIntersect(obj: THREE.Object3D | null): THREE.Group | null {
     let o: THREE.Object3D | null = obj;
@@ -357,7 +355,7 @@ async function main() {
     const pSource = document.getElementById('p-source');
     const pAsof = document.getElementById('p-asof');
     if (pSource) pSource.textContent = st.sourceLabel ?? dataSourceDetailLabel(st.source);
-    if (pAsof) pAsof.textContent = formatSyncTime(st.asOf ?? generatedAt);
+    if (pAsof) pAsof.textContent = formatSyncTime(generatedAt);
 
     if (highlighted && highlighted !== mesh) resetBuildingInteractionScale(highlighted);
     if (mesh) {
@@ -554,24 +552,21 @@ async function main() {
     }
   });
 
-  document.getElementById('simBtn')!.addEventListener('click', () => {
-    for (const st of stocks) {
-      if (st.halted) continue;
-      const delta = (Math.random() - 0.5) * 1.2;
-      st.chg = +((st.chg ?? 0) + delta).toFixed(2);
-      if (st.chg > 6) st.chg = 6;
-      if (st.chg < -6) st.chg = -6;
-      st.price = +Math.max(1, (st.price ?? 1) * (1 + delta / 100)).toFixed(2);
-    }
-    treemap.updateAllVisuals();
-    refreshStatus(new Date().toISOString());
-    if (currentStock) {
-      const sign = (currentStock.chg ?? 0) >= 0 ? '+' : '';
-      pChg.textContent = `${sign}${(currentStock.chg ?? 0).toFixed(2)}%`;
-      pChg.classList.remove('up', 'down');
-      pChg.classList.add((currentStock.chg ?? 0) >= 0 ? 'up' : 'down');
-      pPrice.textContent = fmtPrice(currentStock.price ?? 0, currentStock.m);
-    }
+  const simBtn = document.getElementById('simBtn')!;
+  simBtn.addEventListener('click', () => {
+    simBtn.textContent = '갱신 중…';
+    simBtn.setAttribute('disabled', 'true');
+    refreshQuotes().finally(() => {
+      simBtn.textContent = '새로고침';
+      simBtn.removeAttribute('disabled');
+      if (currentStock) {
+        const sign = (currentStock.chg ?? 0) >= 0 ? '+' : '';
+        pChg.textContent = `${sign}${(currentStock.chg ?? 0).toFixed(2)}%`;
+        pChg.classList.remove('up', 'down');
+        pChg.classList.add((currentStock.chg ?? 0) >= 0 ? 'up' : 'down');
+        pPrice.textContent = fmtPrice(currentStock.price ?? 0, currentStock.m);
+      }
+    });
   });
 
   const legendList = document.getElementById('legend-list')!;
@@ -590,7 +585,7 @@ async function main() {
       : d.toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
   }
 
-  function refreshStatus(syncAt = generatedAt) {
+  function refreshStatus(quotesAt?: string) {
     const up = stocks.filter((s) => !s.halted && (s.chg ?? 0) > 0).length;
     const dn = stocks.filter((s) => !s.halted && (s.chg ?? 0) < 0).length;
     const ht = stocks.filter((s) => s.halted).length;
@@ -600,15 +595,16 @@ async function main() {
     document.getElementById('s-up')!.textContent = String(up);
     document.getElementById('s-down')!.textContent = String(dn);
     document.getElementById('s-halt')!.textContent = String(ht);
-    document.getElementById('s-time')!.textContent = formatSyncTime(syncAt);
+    document.getElementById('s-time')!.textContent = quotesAt ? formatSyncTime(quotesAt) : '갱신 중…';
     const srcEl = document.getElementById('s-source-line');
     if (srcEl) srcEl.textContent = dataSnapshotBaselineLabel(appDataSource);
-    if (currentStock && panel.classList.contains('open')) {
-      const pAsof = document.getElementById('p-asof');
-      if (pAsof) pAsof.textContent = formatSyncTime(syncAt);
-    }
   }
   refreshStatus();
+
+  const refreshQuotes = initQuotesClient(stocks, (updatedAt) => {
+    treemap.updateAllVisuals();
+    refreshStatus(updatedAt);
+  });
 
   function lockUI() {
     document.body.classList.add('pre-consent');

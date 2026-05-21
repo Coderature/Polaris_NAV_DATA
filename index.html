@@ -33,8 +33,7 @@
         <div class="search-wrap">
           <input id="search" placeholder="티커 또는 기업명 검색" autocomplete="off" />
         </div>
-        <span class="pill pill-muted"><span class="dot"></span> <span id="finnhub-pill-text">Finnhub 무료 티어. 실패 시 데모 스냅샷으로 폴백.</span></span>
-        <button class="btn" id="simBtn" title="데모 화면에서 등락·시세를 다시 계산합니다">데모 갱신</button>
+        <button class="btn" id="simBtn">새로고침</button>
         <button class="btn btn-ic" id="resetCam" title="Reset camera">⌂</button>
       </div>
     </header>
@@ -84,7 +83,7 @@
       </div>
       <div class="panel-provenance">
         <div class="prov-row"><span class="prov-k">데이터 기준</span><span id="p-source">—</span></div>
-        <div class="prov-row"><span class="prov-k">기준 시각</span><span id="p-asof">—</span></div>
+        <div class="prov-row"><span class="prov-k">공시·뉴스 갱신</span><span id="p-asof">—</span></div>
       </div>
 
       <div class="panel-body">
@@ -145,7 +144,7 @@
       <span class="item">정지 <b id="s-halt">0</b></span>
       <span class="spacer"></span>
       <span class="item statusbar-source"><span id="s-source-line">데모 스냅샷 기준</span></span>
-      <span class="item">마지막 갱신 <b id="s-time">—</b></span>
+      <span class="item">시세 갱신 <b id="s-time">—</b></span>
     </footer>
 
     <!-- Position View (Card 3: 내 포지션은 어디쯤?) -->
