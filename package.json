@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Polaris Navigator — GICS 11 3D market treemap (Sprint 1)",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"tsx server/quotesServer.ts\" \"vite\"",
+    "dev:ui": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "crawl:dart": "tsx scripts/crawl/dartCrawler.ts",
@@ -15,8 +16,11 @@
     "crawl": "npm run build:data"
   },
   "dependencies": {
+    "@types/express": "^5.0.6",
     "axios": "^1.7.0",
     "cheerio": "^1.0.0-rc.12",
+    "concurrently": "^9.2.1",
+    "express": "^5.2.1",
     "groq-sdk": "^1.2.0",
     "openai": "^4.14.0",
     "pdf-parse": "^1.1.1",
