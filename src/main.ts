@@ -42,6 +42,7 @@ function pickRandomQuote() {
 function runSplashSequence(): Promise<void> {
   return new Promise((resolve) => {
     const splash = document.getElementById('splash')!;
+    splash.style.display = '';
     const loading = document.getElementById('splash-loading')!;
     const quoteWrap = document.getElementById('splash-quote')!;
     const quoteText = document.getElementById('quote-text')!;
@@ -151,7 +152,30 @@ function aiSummary(stocks: StockRow[], sectors: SectorDef[], st: StockRow): stri
   `;
 }
 
+function waitForConsent(): Promise<void> {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('modal')!;
+    const inlineWarn = document.getElementById('m-warn')!;
+
+    modal.classList.add('show');
+    document.body.classList.add('pre-consent');
+
+    document.getElementById('m-agree')!.addEventListener('click', () => {
+      localStorage.setItem('consent_given', JSON.stringify({ consent: true, timestamp: new Date().toISOString() }));
+      modal.classList.remove('show');
+      document.body.classList.remove('pre-consent');
+      inlineWarn.classList.remove('show');
+      resolve();
+    }, { once: true });
+
+    document.getElementById('m-cancel')!.addEventListener('click', () => {
+      inlineWarn.classList.add('show');
+    });
+  });
+}
+
 async function main() {
+  await waitForConsent();
   await runSplashSequence();
 
   const { sectors, stocks, generatedAt, extractedRisks, documents } = await loadTreemapData();
@@ -185,8 +209,6 @@ async function main() {
   const aiDisclaimer = document.getElementById('ai-disclaimer')!;
   const hintEl = document.getElementById('hint')!;
 
-  const modal = document.getElementById('modal')!;
-  const inlineWarn = document.getElementById('m-warn')!;
 
   let hovered: THREE.Group | null = null;
   let highlighted: THREE.Group | null = null;
@@ -606,35 +628,6 @@ async function main() {
     refreshStatus(updatedAt);
   });
 
-  function lockUI() {
-    document.body.classList.add('pre-consent');
-    modal.classList.add('show');
-  }
-  function unlockUI() {
-    document.body.classList.remove('pre-consent');
-    modal.classList.remove('show');
-    inlineWarn.classList.remove('show');
-  }
-
-  function checkConsent() {
-    try {
-      const c = JSON.parse(localStorage.getItem('consent_given') || 'null') as { consent?: boolean } | null;
-      if (c?.consent === true) unlockUI();
-      else lockUI();
-    } catch {
-      lockUI();
-    }
-  }
-  checkConsent();
-
-  document.getElementById('m-agree')!.addEventListener('click', () => {
-    localStorage.setItem('consent_given', JSON.stringify({ consent: true, timestamp: new Date().toISOString() }));
-    unlockUI();
-  });
-
-  document.getElementById('m-cancel')!.addEventListener('click', () => {
-    inlineWarn.classList.add('show');
-  });
 
   const homeHub = document.getElementById('home-hub')!;
   const positionView = document.getElementById('position-view')!;
